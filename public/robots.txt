@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://avishkarsports.in/sitemap.xml
