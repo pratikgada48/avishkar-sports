@@ -64,10 +64,10 @@ function Footer() {
 
             <div className="flex flex-col gap-3">
               <Link
-                to="/pickleball-auction-season-2"
+                to="/pickleball-tournament-season-2"
                 className="text-zinc-400 hover:text-pink-500 transition-all duration-300 hover:translate-x-1 cursor-pointer"
               >
-                Pickleball Auction
+                Pickleball Tournament
               </Link>
 
               <Link

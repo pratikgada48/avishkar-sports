@@ -1,13 +1,13 @@
 const tournaments = [
   {
-    id: "pickleball-auction-season-2",
-    title: "Pickleball Premier League 2.0 Auction",
+    id: "pickleball-tournament-season-2",
+    title: "Pickleball Premier League 2.0 Tournament",
     short:
       "240+ registrations including 60+ women registrations. 10 franchise teams competing in Season 2.",
-    banner: "/banners/pickleball-auction.jpg",
+    banner: "/banners/pickleball-tournament.jpg",
 
     description:
-      "The Pickleball Premier League 2.0 Auction is the next major milestone in Avishkar Sports' pickleball journey. With more than 240 registrations, including 60+ women registrations, the event brings together players from across the community. Ten franchise teams will build their squads through an exciting auction process before competing in the league tournament.",
+      "The Pickleball Premier League 2.0 Tournament is the next major milestone in Avishkar Sports' pickleball journey. With more than 240 registrations, including 60+ women registrations, the event brings together players from across the community. Ten franchise teams will build their squads through an exciting auction process before competing in the league tournament.",
 
     stats: [
       "240+ Registrations",
@@ -83,14 +83,14 @@ const tournaments = [
   },
 
   {
-    id: "tennis-turf-tournament",
-    title: "Tennis Turf Tournament",
+    id: "turf-tournament",
+    title: "Turf Tournament",
     short:
-      "Community tennis tournament featuring players from across the region.",
+      "Community turf tournament featuring players from across the region.",
     banner: "/banners/tennis.jpeg",
 
     description:
-      "The Tennis Turf Tournament was organised to promote racquet sports within the community and provide players with a competitive platform.",
+      "The Turf Tournament was organised to bring the community together and provide players with a competitive platform.",
 
     stats: ["Community Event", "Competitive Format"],
   },

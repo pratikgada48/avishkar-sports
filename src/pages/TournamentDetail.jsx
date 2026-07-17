@@ -29,11 +29,12 @@ function TournamentDetail() {
     galleryImages = galleryData.destinationCup;
   }
 
-  if (
-    tournament.id === "pickleball-one-day-tournament" ||
-    tournament.id === "pickleball-league-season-1"
-  ) {
+  if (tournament.id === "pickleball-one-day-tournament") {
     galleryImages = galleryData.pickleball;
+  }
+
+  if (tournament.id === "pickleball-league-season-1") {
+    galleryImages = galleryData.pickleballLeagueSeason1;
   }
 
   return (
@@ -81,7 +82,7 @@ function TournamentDetail() {
         </section>
       )}
 
-      {tournament.id === "pickleball-auction-season-2" && (
+      {tournament.id === "pickleball-tournament-season-2" && (
         <section className="pb-16">
           <div className="text-center">
             <div className="flex justify-center mb-6">
@@ -101,7 +102,7 @@ function TournamentDetail() {
               rel="noreferrer"
               className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl font-bold text-white bg-gradient-to-r from-red-700 via-red-500 to-pink-500 shadow-xl hover:scale-105 transition-all duration-300"
             >
-              ▶ WATCH LIVE AUCTION
+              ▶ WATCH LIVE TOURNAMENT
             </a>
           </div>
         </section>

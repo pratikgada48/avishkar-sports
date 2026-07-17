@@ -19,7 +19,7 @@ function Hero() {
             </h1>
 
             <p className="text-zinc-300 text-base md:text-2xl mt-6 max-w-3xl">
-              Cricket • Pickleball • Tennis • Destination Events • Youth Development
+              Cricket • Pickleball • Destination Events • Youth Development
             </p>
           </div>
         </div>

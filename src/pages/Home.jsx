@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 function Home() {
   const featuredEvent = tournaments.find(
-    (event) => event.id === "pickleball-auction-season-2",
+    (event) => event.id === "pickleball-tournament-season-2",
   );
 
   const remainingEvents = tournaments.filter(
-    (event) => event.id !== "pickleball-auction-season-2",
+    (event) => event.id !== "pickleball-tournament-season-2",
   );
 
   return (
@@ -41,7 +41,7 @@ function Home() {
             </div>
           </div>
 
-          <Link to="/pickleball-auction-season-2" className="block group">
+          <Link to="/pickleball-tournament-season-2" className="block group">
             <div className="overflow-hidden">
               <img
                 src={featuredEvent.banner}
@@ -69,7 +69,7 @@ function Home() {
 
                 <span className="relative flex items-center gap-3">
                   <span className="w-3 h-3 rounded-full bg-white animate-ping"></span>
-                  ▶ WATCH LIVE AUCTION
+                  ▶ WATCH LIVE TOURNAMENT
                 </span>
               </a>
             </div>

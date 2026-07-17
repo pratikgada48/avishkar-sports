@@ -28,12 +28,18 @@ function GallerySection({ images = [] }) {
           {images.map((image, index) => (
             <div
               key={index}
-              className="overflow-hidden rounded-2xl bg-zinc-900"
+              className="relative h-[220px] overflow-hidden rounded-2xl bg-zinc-900"
             >
               <img
                 src={image}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-full w-full scale-110 object-cover blur-xl opacity-50"
+              />
+              <img
+                src={image}
                 alt={`Gallery ${index + 1}`}
-                className="w-full h-[220px] object-cover hover:scale-105 transition duration-300"
+                className="relative h-full w-full object-contain"
               />
             </div>
           ))}
