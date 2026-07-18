@@ -44,9 +44,18 @@ function parseCsv(csv) {
 function parseGoogleVisualization(response) {
   const columns = response.table?.cols ?? [];
   const rows = response.table?.rows ?? [];
+  const headers = columns.map((column) => (column.label || column.id || "").trim());
+
+  const isEmptyVisualization =
+    headers.every((header) => !header || /^Col\d+$/i.test(header)) &&
+    rows.every((row) => !row.c?.some((cell) => cell?.f || cell?.v));
+
+  if (isEmptyVisualization) {
+    return { headers: [], rows: [] };
+  }
 
   return {
-    headers: columns.map((column) => column.label || column.id),
+    headers,
     rows: rows.map((row) =>
       columns.map((_, index) => {
         const cell = row.c?.[index];
@@ -136,19 +145,47 @@ function ScoreCards({ scores }) {
   );
 }
 
+function isLogoHeader(header) {
+  return /logo|image|icon/i.test(header);
+}
+
+function isImageUrl(value) {
+  return typeof value === "string" && /\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(value);
+}
+
+function renderTableCellValue(header, value) {
+  if (value && (isLogoHeader(header) || isImageUrl(value))) {
+    return (
+      <div className="flex items-center justify-center">
+        <img
+          src={value}
+          alt={isLogoHeader(header) ? `${header} image` : "logo"}
+          className="h-12 w-12 min-w-[48px] rounded-full border border-zinc-800 object-cover"
+        />
+      </div>
+    );
+  }
+
+  return value || "—";
+}
+
 function ScoreTable({ scores, title, previous = false }) {
   return (
     <div className={previous ? "opacity-70" : ""}>
       <h4 className="mb-3 text-sm font-bold uppercase tracking-wide text-zinc-400">{title}</h4>
       <div className="overflow-x-auto rounded-xl border border-zinc-800">
-        <table className="w-full min-w-[620px] text-left">
-          <thead className="bg-zinc-800/80 text-xs uppercase tracking-wide text-pink-300">
-            <tr>{scores.headers.map((header, index) => <th key={`${header}-${index}`} className="px-4 py-3">{header}</th>)}</tr>
+        <table className="w-full min-w-full table-auto text-left">
+          <thead className="bg-zinc-800/80 text-[10px] uppercase tracking-[0.25em] text-pink-300 sm:text-xs">
+            <tr>{scores.headers.map((header, index) => <th key={`${header}-${index}`} className="px-3 py-2 text-left align-top break-words">{header}</th>)}</tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800">
+          <tbody className="divide-y divide-zinc-800 text-sm sm:text-base">
             {scores.rows.map((row, rowIndex) => (
               <tr key={`${row.join("-")}-${rowIndex}`}>
-                {row.map((value, index) => <td key={`${value}-${index}`} className="px-4 py-3">{value || "—"}</td>)}
+                {row.map((value, index) => (
+                  <td key={`${value}-${index}`} className="px-3 py-2 align-top break-words">
+                    {renderTableCellValue(scores.headers[index], value)}
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
@@ -171,14 +208,35 @@ function GoogleSheetScores() {
   const [status, setStatus] = useState("idle");
 
   useEffect(() => {
-    if (!googleScoresConfig.publishedCsvUrl) return undefined;
+    if (!googleScoresConfig.csvExportUrl) return undefined;
 
     let active = true;
     const loadScores = async () => {
       try {
-        const nextScores = googleScoresConfig.publishedCsvUrl.includes("/gviz/tq")
-          ? await loadGoogleVisualization(googleScoresConfig.publishedCsvUrl)
-          : parseCsv(await (await fetch(googleScoresConfig.publishedCsvUrl, { cache: "no-store" })).text());
+        let nextScores = { headers: [], rows: [] };
+        let loadedFromCsv = false;
+
+        if (googleScoresConfig.csvExportUrl) {
+          try {
+            const csvText = await (await fetch(googleScoresConfig.csvExportUrl, { cache: "no-store" })).text();
+            nextScores = parseCsv(csvText);
+            loadedFromCsv = nextScores.headers.length || nextScores.rows.length;
+          } catch {
+            nextScores = { headers: [], rows: [] };
+          }
+        }
+
+        if (!loadedFromCsv && googleScoresConfig.visualizationUrl) {
+          try {
+            nextScores = await loadGoogleVisualization(googleScoresConfig.visualizationUrl);
+          } catch {
+            nextScores = nextScores.headers.length || nextScores.rows.length ? nextScores : { headers: [], rows: [] };
+          }
+        }
+
+        if (!nextScores.headers.length && !nextScores.rows.length) {
+          throw new Error("No score data available");
+        }
 
         if (active) {
           const currentScores = latestScoresRef.current;
@@ -213,30 +271,27 @@ function GoogleSheetScores() {
 
   if (!googleScoresConfig.publishedCsvUrl) return null;
 
-  const scorecardHeaders = ["team1", "team2"];
-  const isScorecard = scorecardHeaders.every((expectedHeader) =>
-    scores.headers.some(
-      (header) => header.toLowerCase().replace(/[^a-z0-9]/g, "") === expectedHeader,
-    ),
-  );
-  const isStandings = ["team", "points"].every((expectedHeader) =>
-    scores.headers.some(
-      (header) => header.toLowerCase().replace(/[^a-z0-9]/g, "") === expectedHeader,
-    ),
-  );
+  const hasData = scores.headers.length > 0 || scores.rows.length > 0;
 
   return (
     <div className="mt-8">
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h3 className="text-xl font-bold">{isStandings ? "Live standings" : "Match scores"}</h3>
+        <h3 className="text-xl font-bold">Live sheet updates</h3>
         <span className="text-xs text-zinc-500">Refreshes every 30 seconds</span>
       </div>
       {status === "error" ? (
         <p className="rounded-xl border border-zinc-800 px-5 py-4 text-zinc-400">
           Match scores are temporarily unavailable.
         </p>
+      ) : !hasData ? (
+        <p className="rounded-xl border border-zinc-800 px-5 py-4 text-zinc-400">
+          Live scores will appear here once the sheet is populated.
+        </p>
       ) : (
-        isScorecard ? <ScoreCards scores={scores} /> : <div className="grid gap-6 xl:grid-cols-2"><ScoreTable scores={scores} title={isStandings ? "Current update" : "Current data"} />{previousScores && <ScoreTable scores={previousScores} title="Previous update" previous />}</div>
+        <div className="grid gap-6 xl:grid-cols-2">
+          <ScoreTable scores={scores} title="Current update" />
+          {previousScores && <ScoreTable scores={previousScores} title="Previous update" previous />}
+        </div>
       )}
     </div>
   );
