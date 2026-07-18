@@ -1,6 +1,7 @@
 import Hero from "../components/Hero";
 import tournaments from "../data/tournaments";
 import { Link } from "react-router-dom";
+import SuperscoreTournament from "../components/SuperscoreTournament";
 
 function Home() {
   const featuredEvent = tournaments.find(
@@ -58,21 +59,7 @@ function Home() {
               yet.
             </p>
 
-            <div className="flex justify-center mt-8">
-              <a
-                href="https://www.youtube.com/live/vkUc9HL4TYE"
-                target="_blank"
-                rel="noreferrer"
-                className="group relative overflow-hidden px-8 py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-red-600 via-red-500 to-pink-500 shadow-xl hover:scale-105 transition-all duration-300"
-              >
-                <span className="absolute inset-0 bg-white/10 animate-pulse"></span>
-
-                <span className="relative flex items-center gap-3">
-                  <span className="w-3 h-3 rounded-full bg-white animate-ping"></span>
-                  ▶ WATCH LIVE TOURNAMENT
-                </span>
-              </a>
-            </div>
+            <SuperscoreTournament compact />
           </div>
         </div>
       </section>

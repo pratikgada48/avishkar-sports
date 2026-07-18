@@ -5,6 +5,7 @@ import SponsorsSection from "../components/SponsorsSection";
 import TeamOwnersSection from "../components/TeamOwnersSection";
 import GallerySection from "../components/GallerySection";
 import galleryData from "../data/galleryData";
+import SuperscoreTournament from "../components/SuperscoreTournament";
 
 function TournamentDetail() {
   const { id } = useParams();
@@ -83,29 +84,7 @@ function TournamentDetail() {
       )}
 
       {tournament.id === "pickleball-tournament-season-2" && (
-        <section className="pb-16">
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <span className="flex items-center gap-3 px-5 py-2 rounded-full bg-gradient-to-r from-red-700 via-red-500 to-pink-500 text-white font-bold shadow-xl animate-pulse">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-                </span>
-                LIVE NOW
-              </span>
-            </div>
-
-            <a
-              href="https://www.youtube.com/live/vkUc9HL4TYE"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl font-bold text-white bg-gradient-to-r from-red-700 via-red-500 to-pink-500 shadow-xl hover:scale-105 transition-all duration-300"
-            >
-              ▶ WATCH LIVE TOURNAMENT
-            </a>
-          </div>
-        </section>
+        <SuperscoreTournament />
       )}
 
       {/* Team Owners */}
