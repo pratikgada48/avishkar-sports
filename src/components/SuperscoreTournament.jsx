@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { superscoreTournament } from "../data/superscoreTournament";
+import GoogleSheetScores from "./GoogleSheetScores";
+import { googleScoresConfig } from "../data/googleScores";
 
 const mediaBaseUrl = "https://mscsuper.blr1.digitaloceanspaces.com";
 
@@ -140,7 +142,7 @@ function SuperscoreTournament({ compact = false }) {
             </div>
           )}
 
-          <div className="mt-8">
+          {!googleScoresConfig.publishedCsvUrl && <div className="mt-8">
             <div className="mb-4 flex items-center justify-between gap-4">
               <h3 className="text-xl font-bold">Live standings</h3>
               <span className="text-xs text-zinc-500">Refreshes every 30 seconds</span>
@@ -163,7 +165,9 @@ function SuperscoreTournament({ compact = false }) {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div>}
+
+          <GoogleSheetScores />
         </div>
       </div>
     </section>
