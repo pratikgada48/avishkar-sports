@@ -115,7 +115,7 @@ const isReady = status === "ready";
                   href={superscoreTournament.detailsUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex shrink-0 justify-center rounded-xl border border-pink-500 px-5 py-3 font-bold text-pink-300 transition hover:bg-pink-500 hover:text-white"
+                  className="w-full md:w-auto inline-flex shrink-0 justify-center rounded-xl border border-pink-500 px-5 py-3 font-bold text-pink-300 transition hover:bg-pink-500 hover:text-white mt-3 md:mt-0"
                 >
                   View on SuperScore ↗
                 </a>
