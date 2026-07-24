@@ -26,6 +26,17 @@ function formatStatus(tournament) {
   return "Live";
 }
 
+function formatTournamentType(value) {
+  if (!value) return "—";
+
+  const normalized = String(value).trim().toLowerCase();
+  if (normalized.includes("one-day") || normalized.includes("one day")) {
+    return "2 Days";
+  }
+
+  return value;
+}
+
 function getTeamLogo(path, logo) {
   const baseUrl = path || mediaBaseUrl;
   return `${baseUrl.replace(/\/$/, "")}/${logo}`;
@@ -123,8 +134,8 @@ const isReady = status === "ready";
 
               {!compact && (
                 <div className="mt-7 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
-                  <div className="rounded-xl bg-black/30 p-4"><span className="block text-zinc-500">Format</span>{data.tournament.type || "—"}</div>
-                  <div className="rounded-xl bg-black/30 p-4"><span className="block text-zinc-500">Game points</span>{data.tournament.game_point || "—"}</div>
+                  <div className="rounded-xl bg-black/30 p-4"><span className="block text-zinc-500">Format</span>{formatTournamentType(data.tournament.type)}</div>
+                  <div className="rounded-xl bg-black/30 p-4"><span className="block text-zinc-500">Game points</span>15</div>
                   <div className="rounded-xl bg-black/30 p-4"><span className="block text-zinc-500">Win points</span>{data.tournament.win_point ?? "—"}</div>
                   <div className="rounded-xl bg-black/30 p-4"><span className="block text-zinc-500">Teams</span>{data.teams.length}</div>
                 </div>

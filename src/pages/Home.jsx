@@ -21,14 +21,16 @@ function Home() {
         <div className="w-full">
           <div className="px-6 md:px-12 lg:px-20 mb-10 text-center">
             <span className="text-pink-400 uppercase tracking-[4px] font-semibold">
-              Completed Event
+              2 Days Format
             </span>
 
             <div className="flex flex-col items-center gap-4 mt-4">
               <div className="flex items-center gap-4 flex-wrap justify-center">
-                <h2 className="text-4xl md:text-6xl font-bold text-center">
-                  {featuredEvent.title}
-                </h2>
+                <Link to="/pickleball-tournament-season-2" className="block group">
+                  <h2 className="text-4xl md:text-6xl font-bold text-center transition duration-300 group-hover:text-pink-400">
+                    {featuredEvent.title}
+                  </h2>
+                </Link>
               </div>
             </div>
           </div>
