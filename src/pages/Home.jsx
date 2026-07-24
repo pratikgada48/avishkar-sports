@@ -21,7 +21,7 @@ function Home() {
         <div className="w-full">
           <div className="px-6 md:px-12 lg:px-20 mb-10 text-center">
             <span className="text-pink-400 uppercase tracking-[4px] font-semibold">
-              Upcoming Event
+              Completed Event
             </span>
 
             <div className="flex flex-col items-center gap-4 mt-4">
