@@ -448,9 +448,8 @@ function GoogleSheetScores() {
             )}
           </div>
 
-          <div className="hidden sm:grid gap-6 xl:grid-cols-2">
+          <div className="hidden sm:block">
             <ScoreTable scores={scores} title="Current update" />
-            {previousScores && <ScoreTable scores={previousScores} title="Previous update" previous />}
           </div>
         </div>
       )}
