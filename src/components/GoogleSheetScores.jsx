@@ -179,6 +179,7 @@ function MobileTeamPoints({ scores, previousScores }) {
 
   const teams = scores.rows.map((row) => ({
     name: row[teamIdx] || "—",
+    logo: getLogoUrl(row, scores.headers),
     points: parseNumber(row[pointsIdx]),
     played: playedIdx >= 0 ? parseNumber(row[playedIdx]) : null,
   }));
@@ -194,7 +195,15 @@ function MobileTeamPoints({ scores, previousScores }) {
       {teams.map((team, i) => (
         <div key={`team-${i}`} className="flex items-center justify-between rounded-lg border border-zinc-800 bg-black/20 p-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-800 text-sm font-bold text-zinc-300">{String(team.name).slice(0,2).toUpperCase()}</div>
+            {team.logo ? (
+              <img
+                src={team.logo}
+                alt={`${team.name} logo`}
+                className="h-10 w-10 rounded-full border border-zinc-800 object-cover"
+              />
+            ) : (
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-800 text-sm font-bold text-zinc-300">{String(team.name).slice(0,2).toUpperCase()}</div>
+            )}
             <div>
               <div className="text-sm font-semibold text-zinc-100">{team.name}</div>
               <div className="text-xs text-zinc-400">{team.played != null ? `${team.played} games` : "—"}</div>

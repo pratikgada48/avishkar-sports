@@ -29,15 +29,6 @@ function Home() {
                 <h2 className="text-4xl md:text-6xl font-bold text-center">
                   {featuredEvent.title}
                 </h2>
-
-                <span className="flex items-center gap-3 px-5 py-2 rounded-full bg-gradient-to-r from-red-700 via-red-500 to-pink-500 text-white font-bold shadow-xl animate-pulse">
-                  <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-                  </span>
-                  LIVE
-                </span>
               </div>
             </div>
           </div>
